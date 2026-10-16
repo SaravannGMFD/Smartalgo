@@ -203,4 +203,9 @@ const types = Object.entries(entries).map(([key, input]) => ({
   plugins: [...(key === 'index' ? [aliasSelf] : []), dts()],
 }));
 
-export default [...js, ...scriptTags, allBundle, ...types];
+// A host that bundles the ESM tiers itself (OpenAlgo's frontend) needs neither
+// the classic scripts nor the combined demo bundle, which are most of the build
+// time and memory. Set OAC_ESM_ONLY=1 to skip them.
+const esmOnly = process.env.OAC_ESM_ONLY === '1';
+
+export default esmOnly ? [...js, ...types] : [...js, ...scriptTags, allBundle, ...types];

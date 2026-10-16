@@ -910,7 +910,7 @@ else
         if command -v npm >/dev/null 2>&1; then
             log_message "Building React frontend (dist/ not found)..." "$BLUE"
             # The frontend depends on the in-repo chart library (file:../charts)
-            (cd "$OPENALGO_PATH/charts" && npm ci && npm run build) &&
+            (cd "$OPENALGO_PATH/charts" && npm ci && OAC_ESM_ONLY=1 NODE_OPTIONS=--max-old-space-size=4096 npm run build) &&
             cd "$OPENALGO_PATH/frontend" &&
             npm ci && npm run build
             if [ $? -eq 0 ]; then

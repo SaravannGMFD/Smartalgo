@@ -27,7 +27,8 @@ WORKDIR /app
 COPY charts/package*.json ./charts/
 RUN cd charts && npm ci
 COPY charts/ ./charts/
-RUN cd charts && npm run build
+# ESM tiers and types only; the type bundling needs more than node's default heap.
+RUN cd charts && OAC_ESM_ONLY=1 NODE_OPTIONS=--max-old-space-size=4096 npm run build
 COPY frontend/package*.json ./frontend/
 RUN cd frontend && npm ci
 COPY frontend/ ./frontend/
