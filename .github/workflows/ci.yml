@@ -297,6 +297,8 @@ jobs:
           node-version: '22'
           cache: 'npm'
           cache-dependency-path: frontend/package-lock.json
+      - name: Build chart library
+        run: cd "$GITHUB_WORKSPACE/charts" && npm ci && npm run build
       - run: npm ci
       - run: npm run lint
 
@@ -314,6 +316,8 @@ jobs:
           node-version: '22'
           cache: 'npm'
           cache-dependency-path: frontend/package-lock.json
+      - name: Build chart library
+        run: cd "$GITHUB_WORKSPACE/charts" && npm ci && npm run build
       - run: npm ci
         working-directory: frontend
       - name: export index matches the pinned openalgo-charts
@@ -345,6 +349,8 @@ jobs:
           node-version: '22'
           cache: 'npm'
           cache-dependency-path: frontend/package-lock.json
+      - name: Build chart library
+        run: cd "$GITHUB_WORKSPACE/charts" && npm ci && npm run build
       - run: npm ci
         working-directory: frontend
       - name: name reference matches the pinned openalgo-script
@@ -372,6 +378,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
           cache-dependency-path: frontend/package-lock.json
+      - name: Build chart library
+        run: cd "$GITHUB_WORKSPACE/charts" && npm ci && npm run build
       - run: npm ci
       - run: npm run build
       - uses: actions/upload-artifact@v6
@@ -397,6 +405,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
           cache-dependency-path: frontend/package-lock.json
+      - name: Build chart library
+        run: cd "$GITHUB_WORKSPACE/charts" && npm ci && npm run build
       - run: npm ci
       - run: npm run test:run
       - run: npm run test:coverage
@@ -419,6 +429,8 @@ jobs:
           node-version: '22'
           cache: 'npm'
           cache-dependency-path: frontend/package-lock.json
+      - name: Build chart library
+        run: cd "$GITHUB_WORKSPACE/charts" && npm ci && npm run build
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm run e2e -- --project=chromium
@@ -462,6 +474,8 @@ jobs:
           node-version: '22'
           cache: 'npm'
           cache-dependency-path: frontend/package-lock.json
+      - name: Build chart library
+        run: cd "$GITHUB_WORKSPACE/charts" && npm ci && npm run build
       - name: Build frontend
         working-directory: frontend
         run: |

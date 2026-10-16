@@ -909,7 +909,9 @@ else
     if [ ! -d "$OPENALGO_PATH/frontend/dist" ]; then
         if command -v npm >/dev/null 2>&1; then
             log_message "Building React frontend (dist/ not found)..." "$BLUE"
-            cd "$OPENALGO_PATH/frontend"
+            # The frontend depends on the in-repo chart library (file:../charts)
+            (cd "$OPENALGO_PATH/charts" && npm ci && npm run build) &&
+            cd "$OPENALGO_PATH/frontend" &&
             npm ci && npm run build
             if [ $? -eq 0 ]; then
                 log_message "Frontend built successfully" "$GREEN"
@@ -918,7 +920,7 @@ else
             fi
         else
             log_message "Warning: frontend/dist/ not found and Node.js is not installed." "$YELLOW"
-            log_message "Install Node.js 20.20+, 22.22+, or 24.13+ and run: cd frontend && npm ci && npm run build" "$YELLOW"
+            log_message "Install Node.js 20.20+, 22.22+, or 24.13+ and run: (cd charts && npm ci && npm run build) && cd frontend && npm ci && npm run build" "$YELLOW"
         fi
     fi
 

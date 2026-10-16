@@ -22,6 +22,12 @@ RUN pip install --no-cache-dir uv && \
 # ------------------------------ Frontend Builder Stage --------------------- #
 FROM node:22-trixie-slim AS frontend-builder
 WORKDIR /app
+# The frontend depends on the in-repo chart library (file:../charts), so build
+# it first: its dist/ is not committed.
+COPY charts/package*.json ./charts/
+RUN cd charts && npm ci
+COPY charts/ ./charts/
+RUN cd charts && npm run build
 COPY frontend/package*.json ./frontend/
 RUN cd frontend && npm ci
 COPY frontend/ ./frontend/
